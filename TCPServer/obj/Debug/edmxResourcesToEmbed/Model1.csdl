@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GroupChatAppDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="GroupChatAppDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Message_Table" EntityType="GroupChatAppDBModel.Message_Table" />
+    <EntitySet Name="Sending_Message_Collection_Table" EntityType="GroupChatAppDBModel.Sending_Message_Collection_Table" />
+    <EntitySet Name="User_Table" EntityType="GroupChatAppDBModel.User_Table" />
+    <AssociationSet Name="FK_Message_Table_User_Table" Association="GroupChatAppDBModel.FK_Message_Table_User_Table">
+      <End Role="User_Table" EntitySet="User_Table" />
+      <End Role="Message_Table" EntitySet="Message_Table" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sending_Message_Collection_Table_User_Table" Association="GroupChatAppDBModel.FK_Sending_Message_Collection_Table_User_Table">
+      <End Role="User_Table" EntitySet="User_Table" />
+      <End Role="Sending_Message_Collection_Table" EntitySet="Sending_Message_Collection_Table" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Message_Table">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Messages" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Verification_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="User_Table" Relationship="GroupChatAppDBModel.FK_Message_Table_User_Table" FromRole="Message_Table" ToRole="User_Table" />
+  </EntityType>
+  <EntityType Name="Sending_Message_Collection_Table">
+    <Key>
+      <PropertyRef Name="Message_ID" />
+    </Key>
+    <Property Name="Message_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Sending_msg" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="User_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="User_Table" Relationship="GroupChatAppDBModel.FK_Sending_Message_Collection_Table_User_Table" FromRole="Sending_Message_Collection_Table" ToRole="User_Table" />
+  </EntityType>
+  <EntityType Name="User_Table">
+    <Key>
+      <PropertyRef Name="Verification_Code" />
+    </Key>
+    <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Middle_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Verification_Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Profile_Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Message_Table" Relationship="GroupChatAppDBModel.FK_Message_Table_User_Table" FromRole="User_Table" ToRole="Message_Table" />
+    <NavigationProperty Name="Sending_Message_Collection_Table" Relationship="GroupChatAppDBModel.FK_Sending_Message_Collection_Table_User_Table" FromRole="User_Table" ToRole="Sending_Message_Collection_Table" />
+  </EntityType>
+  <Association Name="FK_Message_Table_User_Table">
+    <End Type="GroupChatAppDBModel.User_Table" Role="User_Table" Multiplicity="0..1" />
+    <End Type="GroupChatAppDBModel.Message_Table" Role="Message_Table" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User_Table">
+        <PropertyRef Name="Verification_Code" />
+      </Principal>
+      <Dependent Role="Message_Table">
+        <PropertyRef Name="Verification_Code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sending_Message_Collection_Table_User_Table">
+    <End Type="GroupChatAppDBModel.User_Table" Role="User_Table" Multiplicity="0..1" />
+    <End Type="GroupChatAppDBModel.Sending_Message_Collection_Table" Role="Sending_Message_Collection_Table" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User_Table">
+        <PropertyRef Name="Verification_Code" />
+      </Principal>
+      <Dependent Role="Sending_Message_Collection_Table">
+        <PropertyRef Name="User_Code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GroupChatAppDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Message_Table">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="varchar" MaxLength="50" />
+          <Property Name="Messages" Type="varchar" MaxLength="50" />
+          <Property Name="Verification_Code" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Sending_Message_Collection_Table">
+          <Key>
+            <PropertyRef Name="Message_ID" />
+          </Key>
+          <Property Name="Message_ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sending_msg" Type="varchar" MaxLength="50" />
+          <Property Name="User_Code" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User_Table">
+          <Key>
+            <PropertyRef Name="Verification_Code" />
+          </Key>
+          <Property Name="First_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Middle_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Last_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Verification_Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Profile_Picture" Type="image" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Message_Table_User_Table">
+          <End Role="User_Table" Type="Self.User_Table" Multiplicity="0..1" />
+          <End Role="Message_Table" Type="Self.Message_Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Table">
+              <PropertyRef Name="Verification_Code" />
+            </Principal>
+            <Dependent Role="Message_Table">
+              <PropertyRef Name="Verification_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sending_Message_Collection_Table_User_Table">
+          <End Role="User_Table" Type="Self.User_Table" Multiplicity="0..1" />
+          <End Role="Sending_Message_Collection_Table" Type="Self.Sending_Message_Collection_Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Table">
+              <PropertyRef Name="Verification_Code" />
+            </Principal>
+            <Dependent Role="Sending_Message_Collection_Table">
+              <PropertyRef Name="User_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GroupChatAppDBModelStoreContainer">
+          <EntitySet Name="Message_Table" EntityType="Self.Message_Table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sending_Message_Collection_Table" EntityType="Self.Sending_Message_Collection_Table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Table" EntityType="Self.User_Table" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Message_Table_User_Table" Association="Self.FK_Message_Table_User_Table">
+            <End Role="User_Table" EntitySet="User_Table" />
+            <End Role="Message_Table" EntitySet="Message_Table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sending_Message_Collection_Table_User_Table" Association="Self.FK_Sending_Message_Collection_Table_User_Table">
+            <End Role="User_Table" EntitySet="User_Table" />
+            <End Role="Sending_Message_Collection_Table" EntitySet="Sending_Message_Collection_Table" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GroupChatAppDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="GroupChatAppDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Message_Table" EntityType="GroupChatAppDBModel.Message_Table" />
+          <EntitySet Name="Sending_Message_Collection_Table" EntityType="GroupChatAppDBModel.Sending_Message_Collection_Table" />
+          <EntitySet Name="User_Table" EntityType="GroupChatAppDBModel.User_Table" />
+          <AssociationSet Name="FK_Message_Table_User_Table" Association="GroupChatAppDBModel.FK_Message_Table_User_Table">
+            <End Role="User_Table" EntitySet="User_Table" />
+            <End Role="Message_Table" EntitySet="Message_Table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sending_Message_Collection_Table_User_Table" Association="GroupChatAppDBModel.FK_Sending_Message_Collection_Table_User_Table">
+            <End Role="User_Table" EntitySet="User_Table" />
+            <End Role="Sending_Message_Collection_Table" EntitySet="Sending_Message_Collection_Table" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Message_Table">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Messages" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Verification_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User_Table" Relationship="GroupChatAppDBModel.FK_Message_Table_User_Table" FromRole="Message_Table" ToRole="User_Table" />
+        </EntityType>
+        <EntityType Name="Sending_Message_Collection_Table">
+          <Key>
+            <PropertyRef Name="Message_ID" />
+          </Key>
+          <Property Name="Message_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sending_msg" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="User_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User_Table" Relationship="GroupChatAppDBModel.FK_Sending_Message_Collection_Table_User_Table" FromRole="Sending_Message_Collection_Table" ToRole="User_Table" />
+        </EntityType>
+        <EntityType Name="User_Table">
+          <Key>
+            <PropertyRef Name="Verification_Code" />
+          </Key>
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Middle_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Verification_Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Profile_Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Message_Table" Relationship="GroupChatAppDBModel.FK_Message_Table_User_Table" FromRole="User_Table" ToRole="Message_Table" />
+          <NavigationProperty Name="Sending_Message_Collection_Table" Relationship="GroupChatAppDBModel.FK_Sending_Message_Collection_Table_User_Table" FromRole="User_Table" ToRole="Sending_Message_Collection_Table" />
+        </EntityType>
+        <Association Name="FK_Message_Table_User_Table">
+          <End Type="GroupChatAppDBModel.User_Table" Role="User_Table" Multiplicity="0..1" />
+          <End Type="GroupChatAppDBModel.Message_Table" Role="Message_Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Table">
+              <PropertyRef Name="Verification_Code" />
+            </Principal>
+            <Dependent Role="Message_Table">
+              <PropertyRef Name="Verification_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sending_Message_Collection_Table_User_Table">
+          <End Type="GroupChatAppDBModel.User_Table" Role="User_Table" Multiplicity="0..1" />
+          <End Type="GroupChatAppDBModel.Sending_Message_Collection_Table" Role="Sending_Message_Collection_Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Table">
+              <PropertyRef Name="Verification_Code" />
+            </Principal>
+            <Dependent Role="Sending_Message_Collection_Table">
+              <PropertyRef Name="User_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GroupChatAppDBModelStoreContainer" CdmEntityContainer="GroupChatAppDBEntities">
+          <EntitySetMapping Name="Message_Table">
+            <EntityTypeMapping TypeName="GroupChatAppDBModel.Message_Table">
+              <MappingFragment StoreEntitySet="Message_Table">
+                <ScalarProperty Name="Verification_Code" ColumnName="Verification_Code" />
+                <ScalarProperty Name="Messages" ColumnName="Messages" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sending_Message_Collection_Table">
+            <EntityTypeMapping TypeName="GroupChatAppDBModel.Sending_Message_Collection_Table">
+              <MappingFragment StoreEntitySet="Sending_Message_Collection_Table">
+                <ScalarProperty Name="User_Code" ColumnName="User_Code" />
+                <ScalarProperty Name="Sending_msg" ColumnName="Sending_msg" />
+                <ScalarProperty Name="Message_ID" ColumnName="Message_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Table">
+            <EntityTypeMapping TypeName="GroupChatAppDBModel.User_Table">
+              <MappingFragment StoreEntitySet="User_Table">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Profile_Picture" ColumnName="Profile_Picture" />
+                <ScalarProperty Name="Verification_Code" ColumnName="Verification_Code" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Middle_Name" ColumnName="Middle_Name" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

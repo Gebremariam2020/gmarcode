@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GroupChatAppDBModelStoreContainer" CdmEntityContainer="GroupChatAppDBEntities">
+    <EntitySetMapping Name="Message_Table">
+      <EntityTypeMapping TypeName="GroupChatAppDBModel.Message_Table">
+        <MappingFragment StoreEntitySet="Message_Table">
+          <ScalarProperty Name="Verification_Code" ColumnName="Verification_Code" />
+          <ScalarProperty Name="Messages" ColumnName="Messages" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sending_Message_Collection_Table">
+      <EntityTypeMapping TypeName="GroupChatAppDBModel.Sending_Message_Collection_Table">
+        <MappingFragment StoreEntitySet="Sending_Message_Collection_Table">
+          <ScalarProperty Name="User_Code" ColumnName="User_Code" />
+          <ScalarProperty Name="Sending_msg" ColumnName="Sending_msg" />
+          <ScalarProperty Name="Message_ID" ColumnName="Message_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_Table">
+      <EntityTypeMapping TypeName="GroupChatAppDBModel.User_Table">
+        <MappingFragment StoreEntitySet="User_Table">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Profile_Picture" ColumnName="Profile_Picture" />
+          <ScalarProperty Name="Verification_Code" ColumnName="Verification_Code" />
+          <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+          <ScalarProperty Name="Middle_Name" ColumnName="Middle_Name" />
+          <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
