@@ -1,0 +1,16 @@
+#include<iostream.h>
+int main(){
+int a,sum=0;
+cin>>a;
+if(a!=-1){
+for (int i=0;i<=a.length;i++){
+sum+=i;
+
+}
+cout<<sum;
+}
+else
+{
+cout<<"finished";
+}
+}
