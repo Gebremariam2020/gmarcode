@@ -40,7 +40,7 @@ namespace TCPServer
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("wellcome");
             try
             {
                 VerficationGenerate();
